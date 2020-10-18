@@ -41,6 +41,8 @@ logger = getLogger(__name__)
 path = os.path.dirname(__file__)
 picfolder = os.path.join(path, "photo")
 giffolder = os.path.join(path, "gif")
+print(path)
+print(picfolder)
 print(giffolder)
 
 
