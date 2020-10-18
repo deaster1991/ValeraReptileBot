@@ -38,13 +38,9 @@ def debug_requests(f):
     return inner
 
 
-path = os.path.dirname(__file__)
+path = os.path.dirname(os.path.abspath(__file__))
 picfolder = os.path.join(path, "photo")
 giffolder = os.path.join(path, "gif")
-print(path)
-print(picfolder)
-print(giffolder)
-
 
 MAIN_LEFT = "main_left"
 MAIN_RIGHT = "main_right"
@@ -58,7 +54,6 @@ TITLES = {
 
 
 # Положення кнопок
-# @debug_requests
 def base_keyboard():
     keyboard = [
         [
@@ -73,7 +68,7 @@ def base_keyboard():
 
 
 # Дії для кнопок
-# @debug_requests
+@debug_requests
 def call_keyboard(bot: Bot, update: Update, **kwargs):
     if update.callback_query.data == MAIN_LEFT:
         bot.send_message(
@@ -98,7 +93,7 @@ def call_keyboard(bot: Bot, update: Update, **kwargs):
 # Початкове меню
 @debug_requests
 def do_start(bot: Bot, update: Update):
-    # bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/start.jpg', 'rb'))
+    bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/start.jpg', 'rb'))
     bot.send_message(chat_id=update.message.chat_id,
                      text='Слава Нібіру! Рептилоідам Слава!\n'
                           'Юзай менюшку Homosapien...',
@@ -106,7 +101,7 @@ def do_start(bot: Bot, update: Update):
 
 
 @debug_requests
-def do_echo(bot: Bot, update: Update, context):
+def do_echo(bot: Bot, update: Update):
     chat_id = update.message.chat_id
     text = update.message.text
     if text == BUTTON_GIF:
@@ -132,7 +127,7 @@ def do_echo(bot: Bot, update: Update, context):
 # Меню виклику допомоги
 @debug_requests
 def do_help(bot: Bot, update: Update):
-    # bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/help.jpg', 'rb'))
+    bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/help.jpg', 'rb'))
     bot.send_message(chat_id=update.message.chat_id,
                      text='Що не справився? 😨\n\n'
                           'ну дивись що можна:\n'
@@ -150,7 +145,8 @@ def do_help(bot: Bot, update: Update):
 def do_random_image(bot: Bot, update: Update):
     files = os.listdir(picfolder)
     mem = str(random.choice(list(files)))
-    bot.send_photo(chat_id=update.message.chat_id, photo=open(picfolder + '\\' + mem, 'rb'),
+
+    bot.send_photo(chat_id=update.message.chat_id, photo=open(picfolder + '/' + mem, 'rb'),
                    reply_markup=base_keyboard(), )
 
 
@@ -158,7 +154,8 @@ def do_random_image(bot: Bot, update: Update):
 def do_random_gif(bot: Bot, update: Update):
     files = os.listdir(giffolder)
     mem = str(random.choice(list(files)))
-    bot.send_animation(chat_id=update.message.chat_id, animation=open(giffolder + '\\' + mem, 'rb'),
+
+    bot.send_animation(chat_id=update.message.chat_id, animation=open(giffolder + '/' + mem, 'rb'),
                        reply_markup=base_keyboard(), )
 
 
@@ -169,7 +166,6 @@ def main():
     )
     updater = Updater(
         bot=bot,
-        # use_context=True
     )
 
     start_handler = CommandHandler("start", do_start)
