@@ -27,15 +27,15 @@ config = load_config()
 logger = getLogger(__name__)
 
 
-# def debug_requests(f):
-#     def inner(*args, **kwargs):
-#         try:
-#             logger.info("Обращение в функцию {}".format(f.__name__))
-#             return f(*args, **kwargs)
-#         except Exception:
-#             logger.exception("Ошибка в обработчике {}".format(f.__name__))
-#
-#     return inner
+def debug_requests(f):
+    def inner(*args, **kwargs):
+        try:
+            logger.info("Обращение в функцию {}".format(f.__name__))
+            return f(*args, **kwargs)
+        except Exception:
+            logger.exception("Ошибка в обработчике {}".format(f.__name__))
+
+    return inner
 
 
 path = os.path.dirname(__file__)
@@ -96,7 +96,7 @@ def call_keyboard(bot: Bot, update: Update, **kwargs):
 
 
 # Початкове меню
-# @debug_requests
+@debug_requests
 def do_start(bot: Bot, update: Update):
     bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/start.jpg', 'rb'))
     bot.send_message(chat_id=update.message.chat_id,
@@ -105,7 +105,7 @@ def do_start(bot: Bot, update: Update):
                      reply_markup=get_base_reply_keyboard(), )
 
 
-# @debug_requests
+@debug_requests
 def do_echo(bot: Bot, update: Update, context):
     chat_id = update.message.chat_id
     text = update.message.text
@@ -130,7 +130,7 @@ def do_echo(bot: Bot, update: Update, context):
 
 
 # Меню виклику допомоги
-# @debug_requests
+@debug_requests
 def do_help(bot: Bot, update: Update):
     bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/help.jpg', 'rb'))
     bot.send_message(chat_id=update.message.chat_id,
@@ -146,7 +146,7 @@ def do_help(bot: Bot, update: Update):
 
 
 # Рандомна шутка картинка
-# @debug_requests
+@debug_requests
 def do_random_image(bot: Bot, update: Update):
     files = os.listdir(picfolder)
     mem = str(random.choice(list(files)))
@@ -154,7 +154,7 @@ def do_random_image(bot: Bot, update: Update):
                    reply_markup=base_keyboard(), )
 
 
-# @debug_requests
+@debug_requests
 def do_random_gif(bot: Bot, update: Update):
     files = os.listdir(giffolder)
     mem = str(random.choice(list(files)))
@@ -162,7 +162,7 @@ def do_random_gif(bot: Bot, update: Update):
                        reply_markup=base_keyboard(), )
 
 
-# @debug_requests
+@debug_requests
 def main():
     bot = Bot(
         token=TG_TOKEN,
