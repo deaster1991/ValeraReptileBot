@@ -98,7 +98,7 @@ def call_keyboard(bot: Bot, update: Update, **kwargs):
 # Початкове меню
 @debug_requests
 def do_start(bot: Bot, update: Update):
-    bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/start.jpg', 'rb'))
+    # bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/start.jpg', 'rb'))
     bot.send_message(chat_id=update.message.chat_id,
                      text='Слава Нібіру! Рептилоідам Слава!\n'
                           'Юзай менюшку Homosapien...',
@@ -132,7 +132,7 @@ def do_echo(bot: Bot, update: Update, context):
 # Меню виклику допомоги
 @debug_requests
 def do_help(bot: Bot, update: Update):
-    bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/help.jpg', 'rb'))
+    # bot.send_photo(chat_id=update.message.chat_id, photo=open(path + '/help.jpg', 'rb'))
     bot.send_message(chat_id=update.message.chat_id,
                      text='Що не справився? 😨\n\n'
                           'ну дивись що можна:\n'
