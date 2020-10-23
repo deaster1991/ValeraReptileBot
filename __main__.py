@@ -1,26 +1,28 @@
 import os
 import random
-import datetime
-import string
-from logging import getLogger
-from subprocess import Popen
-from subprocess import PIPE
+# import datetime
+# import string
+# from logging import getLogger
+# from subprocess import Popen
+# from subprocess import PIPE
 
 from telegram import Bot
 from telegram import Update
-from telegram import ParseMode
+# from telegram import ParseMode
 from telegram import InlineKeyboardButton
 from telegram import InlineKeyboardMarkup
-from telegram import ReplyKeyboardRemove
+# from telegram import ReplyKeyboardRemove
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler
 from telegram.ext import Filters
 from telegram.ext import CallbackQueryHandler
+from telegram import KeyboardButton
+from telegram import ReplyKeyboardMarkup
 
-from echo.buttons import BUTTON_IMG, BUTTON_GIF, BUTTON_HELP
-from echo.buttons import get_base_reply_keyboard
-from echo.config import load_config
+# from echo.buttons import BUTTON_IMG, BUTTON_GIF, BUTTON_HELP
+# from echo.buttons import get_base_reply_keyboard
+# from echo.config import load_config
 from settings.config import TG_TOKEN
 
 # config = load_config()
@@ -46,11 +48,35 @@ MAIN_LEFT = "main_left"
 MAIN_RIGHT = "main_right"
 MAIN_BOTTOM = "main_bottom"
 
+BUTTON_IMG = "Комсопікча 🚀"
+BUTTON_GIF = "Анімайка 👻"
+BUTTON_TALK = "Аааа❔"
+BUTTON_JOKE = "Щутка 👌"
+BUTTON_HELP = "Памагітє❕"
+
 TITLES = {
     MAIN_LEFT: "Гг 😆",
     MAIN_RIGHT: "Боян 🎹",
     MAIN_BOTTOM: "Ват? 🙃"
 }
+
+
+def get_base_reply_keyboard():
+    keyboard = [
+        [
+            KeyboardButton(BUTTON_GIF),
+            KeyboardButton(BUTTON_IMG),
+        ],
+        [
+            KeyboardButton(BUTTON_TALK),
+            KeyboardButton(BUTTON_JOKE),
+            KeyboardButton(BUTTON_HELP),
+        ],
+    ]
+    return ReplyKeyboardMarkup(
+        keyboard=keyboard,
+        resize_keyboard=True,
+    )
 
 
 # Положення кнопок
